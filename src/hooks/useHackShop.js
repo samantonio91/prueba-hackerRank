@@ -53,26 +53,26 @@ const useHackShop = () => {
 
     }));
   }
-  const toggleProducts = (activity, student, d) => {
+  const toggleProducts = (activity, product, d) => {
     if(activity == 'add') {
       let itms = cart.items;
-      if(cart.items.find(item => item['id'] == student.id) == undefined) {
-        student.cartQuantity = 1
-        itms.push(student);
+      if(cart.items.find(item => item['id'] == product.id) == undefined) {
+        product.cartQuantity = 1
+        itms.push(product);
       }
       else {
         cart.items.forEach((element, index) => {
-          if(element.id === student.id) {
-            student.cartQuantity = student.cartQuantity + 1
-            cart.items[index] = student;
+          if(element.id === product.id) {
+            product.cartQuantity = product.cartQuantity + 1
+            cart.items[index] = product;
           }
         });
         itms = cart.items
       } 
       setCart({...cart, 
         items: itms,
-        subTotal: parseInt(cart.subTotal) + student.price,
-        totalPrice: parseInt(cart.subTotal) + student.price - (Math.floor(((parseInt(cart.subTotal) + student.price)) * cart.discount  )/100),
+        subTotal: parseInt(cart.subTotal) + product.price,
+        totalPrice: parseInt(cart.subTotal) + product.price - (Math.floor(((parseInt(cart.subTotal) + product.price)) * cart.discount  )/100),
         discount: parseInt(cart.discount)
       })
     }
@@ -80,17 +80,17 @@ const useHackShop = () => {
       let itms = cart.items;
       if(cart.items.find(item => item['cartQuantity'] > 1) ) {
         cart.items.forEach((element, index) => {
-          if(element.id === student.id) {
-            student.cartQuantity = student.cartQuantity - 1
-            cart.items[index] = student;
+          if(element.id === product.id) {
+            product.cartQuantity = product.cartQuantity - 1
+            cart.items[index] = product;
           }
         });
         itms = cart.items;
       } 
       else {
         cart.items.forEach((element, index) => {
-          if(element.id === student.id) {
-            student.cartQuantity = student.cartQuantity - 1
+          if(element.id === product.id) {
+            product.cartQuantity = product.cartQuantity - 1
             cart.items.splice(index)
           }
         });
@@ -98,8 +98,8 @@ const useHackShop = () => {
       }
       setCart({...cart, 
         items: itms,
-        subTotal: parseInt(cart.subTotal) - student.price,
-        totalPrice: parseInt(cart.subTotal) - student.price - (Math.floor(((parseInt(cart.subTotal) + student.price)) * cart.discount  )/100),
+        subTotal: parseInt(cart.subTotal) - product.price,
+        totalPrice: parseInt(cart.subTotal) - product.price - (Math.floor(((parseInt(cart.subTotal) + product.price)) * cart.discount  )/100),
         discount: parseInt(cart.discount)
       })
     }
